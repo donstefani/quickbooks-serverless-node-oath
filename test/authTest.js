@@ -1,7 +1,3 @@
-/* eslint-disable func-names */
-/* eslint-disable prefer-arrow-callback */
-/* eslint-disable no-unused-vars */
-
 'use strict';
 
 const { expect } = require('chai');
@@ -9,7 +5,7 @@ const should = require('chai').should();
 const {
   oauthService,
   getStoredRefreshToken,
-  writeStoredRefreshToken
+  writeStoredRefreshToken,
 } = require('../services/auth/oauthService');
 require('dotenv-flow').config();
 

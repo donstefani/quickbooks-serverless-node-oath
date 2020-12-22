@@ -1,4 +1,4 @@
-service: quickbooks-sync
+service: quickbooks-oauth
 
 provider:
   name: aws
@@ -8,7 +8,6 @@ provider:
     - Effect: Allow
       Action:
         - lambda: '*'
-        - rds: '*'
       Resource:
         - '*'
 
@@ -16,20 +15,12 @@ provider:
   region: ${env:REGION}
   role: ${env:ROLE}
 
-  vpc:
-    securityGroupIds: ${file(config/vpc-config-${env:STAGE}.js):securityGroups}
-    subnetIds: ${file(config/vpc-config-${env:STAGE}.js):subnets}
-
 functions:
-  app:
+  quickbooks_oauth:
     handler: index.handler
-    events:
-      - http: GET /auth
-  quickbooks_sync:
-    handler: quickbooksSyncCron.handler
     timeout: 500
     events:
-      - schedule: rate(2 minutes)
+      - schedule: rate(1 hour)
 
 plugins:
   - serverless-offline

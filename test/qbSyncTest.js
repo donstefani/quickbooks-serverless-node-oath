@@ -1,8 +1,6 @@
-/* eslint-disable func-names */
-/* eslint-disable prefer-arrow-callback */
 const LambdaTester = require('lambda-tester');
 
-const { handler } = require('../quickbooksSyncCron');
+const { handler } = require('../index');
 
 describe('QB SYNC TEST', function () {
   const event = {};
