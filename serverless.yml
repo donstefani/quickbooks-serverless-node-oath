@@ -1,0 +1,36 @@
+service: quickbooks-sync
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - lambda: '*'
+        - rds: '*'
+      Resource:
+        - '*'
+
+  stage: ${env:STAGE}
+  region: ${env:REGION}
+  role: ${env:ROLE}
+
+  vpc:
+    securityGroupIds: ${file(config/vpc-config-${env:STAGE}.js):securityGroups}
+    subnetIds: ${file(config/vpc-config-${env:STAGE}.js):subnets}
+
+functions:
+  app:
+    handler: index.handler
+    events:
+      - http: GET /auth
+  quickbooks_sync:
+    handler: quickbooksSyncCron.handler
+    timeout: 500
+    events:
+      - schedule: rate(2 minutes)
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
