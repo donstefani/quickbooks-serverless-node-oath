@@ -37,30 +37,6 @@ const writeStoredRefreshToken = async (newRefreshToken, event) => {
   }
 };
 
-/*
-const validateToken = () => {
-  const oauthClient = getBaseClient();
-  if (oauthClient.isAccessTokenValid()) {
-    console.log('The access_token is valid');
-    return false;
-  }
-
-  const previousRefreshToken = getStoredRefreshToken();
-
-  if (!oauthClient.isAccessTokenValid()) {
-    oauthClient
-      .refreshUsingToken(previousRefreshToken)
-      .then((authResponse) => {
-        console.log(`Tokens refreshed : ${JSON.stringify(authResponse.json())}`);
-      })
-      .catch((e) => {
-        console.error(`The error message is :${e.originalMessage}`);
-        console.error(e.intuit_tid);
-      });
-  }
-};
-*/
-
 const oauthService = async () => {
   const oauthClient = await getBaseClient();
   const event = new Date().toString();
